@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120">
+  <defs>
+    <pattern id="minorGrid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="#f6d6d6" stroke-width="0.8"/></pattern>
+    <pattern id="majorGrid" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="url(#minorGrid)"/><path d="M 50 0 L 0 0 0 50" fill="none" stroke="#ebb9b9" stroke-width="1.1"/></pattern>
+    <g id="calibration"><path d="M 0 48 L 0 12 L 15 12 L 15 48" fill="none" stroke="#172c46" stroke-width="2"/></g>
+    <g id="waveNormal"><path d="M 0 55 L 24 55 Q 31 47 38 55 L 48 55 L 53 42 L 58 78 L 64 29 L 69 65 L 80 55 L 104 55 Q 120 35 138 55 L 176 55" fill="none" stroke="#172c46" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/></g>
+    <g id="waveInv"><path d="M 0 55 L 24 55 Q 31 47 38 55 L 48 55 L 53 42 L 58 78 L 64 29 L 69 65 L 80 55 L 104 55 Q 120 74 138 55 L 176 55" fill="none" stroke="#172c46" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/></g>
+  </defs>
+  <rect width="1600" height="1120" fill="#ffffff"/>
+  <rect x="0" y="0" width="1600" height="308" fill="#ffffff"/>
+  <text x="40" y="44" fill="#17365d" font-family="Arial, sans-serif" font-size="30" font-weight="700">RapidMI Test ECG Report</text>
+  <text x="40" y="72" fill="#64748b" font-family="Arial, sans-serif" font-size="16">Test image for interface demonstration only</text>
+  <line x1="40" y1="90" x2="1560" y2="90" stroke="#98a8b8" stroke-width="1.5"/>
+  <text x="40" y="128" fill="#243b53" font-family="Arial, sans-serif" font-size="18" font-weight="700">Report parameters</text>
+  <g fill="#243b53" font-family="Arial, sans-serif" font-size="17">
+    <text x="40" y="160">Case: MI-related screen-positive test report</text><text x="40" y="190">Age / sex: 55 years / Male</text><text x="40" y="220">Heart rate: 80 bpm</text><text x="40" y="250">PR interval: 155 ms</text><text x="40" y="280">QRS duration: 98 ms</text>
+    <text x="390" y="160">QT / QTc: 395 / 435 ms</text><text x="390" y="190">P / QRS / T axis: 48 / 50 / 92 degrees</text><text x="390" y="220">RV5 / SV1: 1.50 / 0.70 mV</text><text x="390" y="250">RV5 + SV1: 2.20 mV</text>
+    <text x="880" y="160" font-weight="700">ECG statement: Test report</text><text x="880" y="190">Screening workflow: Fixed-threshold-positive input</text><text x="880" y="220">Parameters are preloaded for interface testing.</text>
+  </g>
+  <text x="40" y="336" fill="#64748b" font-family="Arial, sans-serif" font-size="15">10 mm/mV   25 mm/s   Test waveform display</text>
+  <rect x="0" y="350" width="1600" height="770" fill="url(#majorGrid)"/>
+  <g font-family="Arial, sans-serif" font-size="19" fill="#172c46" font-weight="700">
+    <text x="66" y="424">I</text><text x="66" y="549">II</text><text x="66" y="674">III</text><text x="66" y="799">aVR</text><text x="66" y="924">aVL</text><text x="66" y="1049">aVF</text>
+    <text x="862" y="424">V1</text><text x="862" y="549">V2</text><text x="862" y="674">V3</text><text x="862" y="799">V4</text><text x="862" y="924">V5</text><text x="862" y="1049">V6</text>
+  </g>
+  <g transform="translate(18 370)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+  <g transform="translate(18 495)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+  <g transform="translate(18 620)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveInv"/><use href="#waveInv" transform="translate(180 0)"/><use href="#waveInv" transform="translate(360 0)"/><use href="#waveInv" transform="translate(540 0)"/></g></g>
+  <g transform="translate(18 745)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveInv"/><use href="#waveInv" transform="translate(180 0)"/><use href="#waveInv" transform="translate(360 0)"/><use href="#waveInv" transform="translate(540 0)"/></g></g>
+  <g transform="translate(18 870)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+  <g transform="translate(18 995)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+  <g transform="translate(812 370)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveInv"/><use href="#waveInv" transform="translate(180 0)"/><use href="#waveInv" transform="translate(360 0)"/><use href="#waveInv" transform="translate(540 0)"/></g></g>
+  <g transform="translate(812 495)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveInv"/><use href="#waveInv" transform="translate(180 0)"/><use href="#waveInv" transform="translate(360 0)"/><use href="#waveInv" transform="translate(540 0)"/></g></g>
+  <g transform="translate(812 620)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveInv"/><use href="#waveInv" transform="translate(180 0)"/><use href="#waveInv" transform="translate(360 0)"/><use href="#waveInv" transform="translate(540 0)"/></g></g>
+  <g transform="translate(812 745)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+  <g transform="translate(812 870)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+  <g transform="translate(812 995)"><use href="#calibration"/><g transform="translate(80 0)"><use href="#waveNormal"/><use href="#waveNormal" transform="translate(180 0)"/><use href="#waveNormal" transform="translate(360 0)"/><use href="#waveNormal" transform="translate(540 0)"/></g></g>
+</svg>

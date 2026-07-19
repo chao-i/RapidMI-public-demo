@@ -1,4 +1,4 @@
-"""Synthetic non-patient cases used only by the public interface demo."""
+"""Fixed, non-patient test cases used only by the public interface demo."""
 
 FEATURES = [
     "age",
@@ -19,9 +19,9 @@ FEATURES = [
 DEMO_CASES = {
     "normal": {
         "id": "normal",
-        "title": "Normal-ECG demonstration",
-        "image_url": "/static/demo/rapidmi_demo_normal.png",
-        "note": "Synthetic interface case. The parameters are preloaded and are not OCR-derived.",
+        "title": "Normal-ECG test report",
+        "image_url": "/static/demo/rapidmi_test_normal.svg",
+        "note": "Test report with preloaded parameter values.",
         "score": 0.0070,
         "values": {
             "age": 43,
@@ -41,9 +41,9 @@ DEMO_CASES = {
     },
     "mi_related": {
         "id": "mi_related",
-        "title": "MI-related screen-positive demonstration",
-        "image_url": "/static/demo/rapidmi_demo_mi_related.png",
-        "note": "Synthetic interface case. The parameters are preloaded and are not OCR-derived.",
+        "title": "MI-related screen-positive test report",
+        "image_url": "/static/demo/rapidmi_test_mi_related.svg",
+        "note": "Test report with preloaded parameter values.",
         "score": 0.8539,
         "values": {
             "age": 55,

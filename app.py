@@ -6,6 +6,7 @@ from flask import Flask, jsonify, render_template, request
 from werkzeug.exceptions import RequestEntityTooLarge
 
 from rapidmi.demo_cases import FEATURES, public_cases
+from rapidmi.predictor import FEATURE_LABELS, NORMAL_RANGES
 from rapidmi.ocr import extract_parameters_from_image
 from rapidmi.predictor import PredictorUnavailable, predict
 
@@ -56,7 +57,36 @@ def ocr():
         result = extract_parameters_from_image(image.read())
     except (RuntimeError, ValueError) as error:
         return jsonify({"error": str(error)}), 400
-    return jsonify(result)
+    extracted = result["values"]
+    details = []
+    for feature, value in extracted.items():
+        lower, upper = NORMAL_RANGES[feature]
+        if value < lower:
+            status = "abnormal_low"
+        elif value > upper:
+            status = "abnormal_high"
+        else:
+            status = "normal"
+        details.append({
+            "feature": feature,
+            "en_name": FEATURE_LABELS[feature],
+            "cn_name": FEATURE_LABELS[feature],
+            "value": value,
+            "unit": "",
+            "unit_en": "",
+            "status": status,
+            "abnormal_msg": "",
+            "abnormal_msg_en": "",
+        })
+    return jsonify({
+        "ocr_available": True,
+        "extracted": extracted,
+        "details": details,
+        "n_abnormal": sum(item["status"] != "normal" for item in details),
+        "n_extracted": len(extracted),
+        "n_total": len(FEATURES),
+        "missing": [feature for feature in FEATURES if feature not in extracted],
+    })
 
 
 @app.post("/api/predict")

@@ -13,6 +13,46 @@ from .demo_cases import DEMO_CASES, FEATURES
 
 SCREENING_THRESHOLD = 0.286
 
+NORMAL_RANGES = {
+    "age": [18, 120],
+    "sex": [0, 1],
+    "hr": [60, 100],
+    "pr_interval": [120, 200],
+    "qrs_duration": [60, 110],
+    "qt_interval": [350, 440],
+    "qtc": [350, 460],
+    "p_axis": [0, 75],
+    "qrs_axis": [-30, 90],
+    "t_axis": [0, 90],
+    "rv5": [0.01, 2.5],
+    "sv1": [0.01, 1.5],
+    "rv5_sv1_amp": [0.02, 3.5],
+}
+
+FEATURE_LABELS = {
+    "age": "Age", "sex": "Sex", "hr": "Heart Rate",
+    "pr_interval": "PR Interval", "qrs_duration": "QRS Duration",
+    "qt_interval": "QT Interval", "qtc": "QTc", "p_axis": "P Axis",
+    "qrs_axis": "QRS Axis", "t_axis": "T Axis", "rv5": "RV5",
+    "sv1": "SV1", "rv5_sv1_amp": "RV5+SV1",
+}
+
+
+def _reference_flags(values: dict) -> list[dict]:
+    flags = []
+    for feature, value in values.items():
+        lower, upper = NORMAL_RANGES[feature]
+        if value < lower or value > upper:
+            flags.append({
+                "feature": feature,
+                "en_name": FEATURE_LABELS[feature],
+                "cn_name": FEATURE_LABELS[feature],
+                "value": value,
+                "status": "abnormal_low" if value < lower else "abnormal_high",
+                "normal_range": [lower, upper],
+            })
+    return flags
+
 
 class PredictorUnavailable(RuntimeError):
     """Raised when a non-demo prediction is requested without an approved model."""
@@ -63,10 +103,20 @@ def predict(features: dict, demo_case_id: str | None = None) -> dict:
         score = float(model.predict_proba(row)[0, 1])
         source = "Output from a locally supplied private model artifact."
 
+    flags = _reference_flags(values)
     return {
         "score": score,
+        "score_pct": round(score * 100, 1),
+        "probability": score,
+        "probability_pct": round(score * 100, 1),
         "threshold": SCREENING_THRESHOLD,
         "screen_positive": score >= SCREENING_THRESHOLD,
+        "risk_color": "#c62828" if score >= SCREENING_THRESHOLD else "#087f5b",
+        "n_abnormal": len(flags),
+        "abnormal_features": flags,
+        "n_missing": 0,
+        "missing_features": [],
+        "missing_feature_names": [],
         "source": source,
         "notice": "Uncalibrated research-model output; not an individual MI probability or diagnosis.",
     }

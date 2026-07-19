@@ -1,11 +1,13 @@
-# RapidMI Public Demonstration and OCR Reference
+# RapidMI Research Interface Reference
 
 This repository contains a privacy-preserving reference implementation for the
-RapidMI research interface. It provides:
+RapidMI research interface. It mirrors the visible browser workflow and its two
+fixed test reports while excluding the locked model artifact, clinical data,
+and production-only configuration. It provides:
 
 - a Flask web interface for reviewing 13 ECG-report parameters;
 - an optional, template-dependent OCR extraction example using Tesseract;
-- two synthetic ECG-report demonstration cases with no patient information;
+- two fixed, non-patient ECG-report test cases with preloaded values;
 - a Docker deployment template that binds to localhost by default.
 
 ## What this repository does not contain
@@ -18,9 +20,19 @@ restricted materials:
 - training, external-validation, and manuscript-generation code;
 - server addresses, credentials, domains, and deployment secrets.
 
-The included demo cases return recorded outputs from the locked research model
-only for interface demonstration. They are not clinical predictions and do not
-make the trained model available.
+## Fixed test reports
+
+The two test reports are intended for reviewers and other users to explore the
+same browser workflow shown by the hosted research prototype:
+
+- **Normal-ECG test report:** recorded locked-model score 0.0070, below the
+  fixed screening threshold.
+- **MI-related screen-positive test report:** recorded locked-model score
+  0.8539, above the fixed screening threshold of 0.286.
+
+These reports contain no patient information. Their displayed parameter values
+and recorded outputs are supplied for interface testing only; they do not make
+the trained model available or provide clinical predictions for a new patient.
 
 ## Important research-use notice
 
@@ -64,11 +76,13 @@ extraction service. Review every extracted field against its source report.
 
 Uploaded images are processed in memory by this reference application and are
 not intentionally saved. Do not upload patient-identifiable reports to a
-public or unencrypted deployment.
+public or unencrypted deployment. The public OCR parser is included only as a
+reference implementation; the two fixed test reports do not require OCR.
 
 ## Optional private model artifact
 
-To test the interface with an authorized private model artifact, place the
+The public code returns recorded outputs only for the two fixed test reports.
+To evaluate another input with an authorized private model artifact, place the
 artifact outside version control and set:
 
 ```bash
