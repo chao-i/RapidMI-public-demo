@@ -59,13 +59,16 @@ class PredictorUnavailable(RuntimeError):
 
 
 def _normalise(features: dict) -> dict:
-    missing = [name for name in FEATURES if features.get(name) in (None, "")]
+    source_features = dict(features or {})
+    missing = [name for name in FEATURES if name != "rv5_sv1_amp" and source_features.get(name) in (None, "")]
     if missing:
         raise ValueError(f"Missing required parameters: {', '.join(missing)}")
     try:
-        return {name: float(features[name]) for name in FEATURES}
+        values = {name: float(source_features[name]) for name in FEATURES if name != "rv5_sv1_amp"}
     except (TypeError, ValueError) as error:
         raise ValueError("All parameters must be numeric.") from error
+    values["rv5_sv1_amp"] = round(values["rv5"] + values["sv1"], 3)
+    return values
 
 
 def _matches_demo(case_id: str | None, values: dict) -> bool:

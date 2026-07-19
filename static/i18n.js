@@ -43,7 +43,7 @@ const I18N = {
     label_t_axis: "T Axis ⭐", range_t_axis: "Normal: 0–90",
     label_rv5: "RV5", range_rv5: "Normal: <2.5",
     label_sv1: "SV1", range_sv1: "Normal: <1.5",
-    label_cornell: "RV5+SV1", unit_cornell: "Sokolow-Lyon sum", range_cornell: "Reference: <3.5",
+  label_cornell: "RV5+SV1", unit_cornell: "Calculated automatically from RV5 + SV1", range_cornell: "Reference: <3.5",
 
     abnormal_title: "⚠ Abnormal Parameter Summary",
     abnormal_low: "Low", abnormal_high: "High", normal: "Normal",
@@ -137,7 +137,7 @@ const I18N = {
     label_t_axis: "T波电轴 ⭐", range_t_axis: "正常: 0–90",
     label_rv5: "RV5", range_rv5: "正常: <2.5",
     label_sv1: "SV1", range_sv1: "正常: <1.5",
-    label_cornell: "RV5+SV1", unit_cornell: "Sokolow-Lyon电压和", range_cornell: "参考: <3.5",
+  label_cornell: "RV5+SV1", unit_cornell: "由RV5 + SV1自动计算", range_cornell: "参考: <3.5",
 
     abnormal_title: "⚠ 异常参数摘要",
     abnormal_low: "偏低", abnormal_high: "偏高", normal: "正常",

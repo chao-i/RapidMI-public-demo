@@ -307,9 +307,13 @@ function autoComputeCornell() {
   const rv5 = parseFloat(document.getElementById('param-rv5')?.value);
   const sv1 = parseFloat(document.getElementById('param-sv1')?.value);
   const cornell = document.getElementById('param-rv5_sv1_amp');
-  if (!isNaN(rv5) && !isNaN(sv1) && cornell && !cornell.value) {
+  if (!cornell) return;
+  if (!isNaN(rv5) && !isNaN(sv1)) {
     cornell.value = (rv5 + sv1).toFixed(3);
-    cornell.className = 'ocr-valid';
+    cornell.className = 'derived';
+  } else {
+    cornell.value = '';
+    cornell.className = '';
   }
 }
 

@@ -191,6 +191,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 32px 20px; }
 .param-row input.abnormal-low { border-color: #ff9800; background: rgba(255, 152, 0, 0.08); }
 .param-row input.abnormal-high { border-color: #ef5350; background: rgba(239, 83, 80, 0.1); }
 .param-row input.manual { border-color: #42a5f5; background: rgba(66, 165, 245, 0.04); }
+.param-row input.derived { border-color: #82c4ad; background: #eef7f4; color: #135d47; }
 
 /* === Abnormal badges === */
 .abnormal-badge { display: inline-block; margin-left: 2px; }
