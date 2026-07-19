@@ -1,0 +1,46 @@
+# Private model artifacts and derived outputs
+model_artifacts/*
+!model_artifacts/README.md
+*.pkl
+*.joblib
+*.onnx
+*.h5
+*.pt
+*.pth
+
+# Clinical or research data
+data/
+uploads/
+results/
+*.csv
+*.xlsx
+*.xls
+*.dcm
+*.pdf
+*.docx
+
+# Secrets and deployment configuration
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.crt
+*.htpasswd
+
+# Python and editor artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.idea/
+.vscode/
+
+# OS files and generated packages
+.DS_Store
+Thumbs.db
+dist/
+*.zip

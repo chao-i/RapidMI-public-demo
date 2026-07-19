@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RapidMI Public Research Demo</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">RESEARCH INTERFACE REFERENCE</p>
+      <h1>RapidMI Public Demonstration</h1>
+      <p class="subtitle">13 routine ECG-report parameters for a research screening workflow</p>
+    </div>
+    <p class="warning">Not a medical device. Not for diagnosis, rule-in, or rule-out.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <p class="step">Step 1</p>
+      <h2>Load a synthetic demonstration report</h2>
+      <p class="intro">Both reports below are synthetic, contain no patient information, and load preconfigured values. They do not use OCR.</p>
+      <div class="case-grid" id="case-grid"></div>
+      <div class="or-divider"><span>or</span></div>
+      <button class="secondary-button" id="manual-entry">Enter parameters manually</button>
+      <p class="status" id="status" aria-live="polite"></p>
+      <div class="preview" id="preview" hidden>
+        <img id="preview-image" alt="Selected synthetic ECG report">
+        <div id="preview-copy"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="ocr-panel">
+      <p class="step">Optional OCR reference</p>
+      <h2>Extract parameters from a local image</h2>
+      <p class="intro">This reference OCR runs in server memory and does not intentionally store files. Do not upload identifiable reports to a public or unencrypted deployment.</p>
+      <form id="ocr-form">
+        <input id="ocr-file" name="image" type="file" accept="image/png,image/jpeg,image/tiff,image/bmp">
+        <button class="secondary-button" type="submit">Run OCR extraction</button>
+      </form>
+      <p class="status" id="ocr-status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" id="parameter-panel" hidden>
+      <p class="step">Step 2</p>
+      <h2>Verify and edit parameters</h2>
+      <p class="intro">OCR values and manual values require source-report review before any research interpretation.</p>
+      <form id="parameter-form" class="parameter-grid"></form>
+      <div class="actions">
+        <button class="primary-button" id="predict-button" type="button">Run research screening workflow</button>
+        <button class="secondary-button" id="clear-button" type="button">Clear values</button>
+      </div>
+    </section>
+
+    <section class="panel result-panel" id="result-panel" hidden>
+      <p class="step">Step 3</p>
+      <h2>Research workflow output</h2>
+      <div id="result"></div>
+    </section>
+  </main>
+
+  <footer>Public reference implementation. Trained model artifacts and clinical data are not included.</footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
