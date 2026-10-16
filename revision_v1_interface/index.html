@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RapidMI ECG Research Prototype</title>
+<link rel="stylesheet" href="./static/style.css?v=20261016-revision-v1-final">
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-content">
+    <p class="eyebrow">RESEARCH PROTOTYPE / NOT A MEDICAL DEVICE</p>
+    <h1 data-i18n="title">RapidMI ECG Research Prototype</h1>
+    <p class="subtitle" data-i18n="subtitle">13 standard report parameters · fixed PTB-derived threshold · cross-setting external validation</p>
+  </div>
+  <div class="header-right">
+    <div class="badges">
+      <span class="badge" data-i18n="badge_hospital">Hospital primary AUC 0.899</span>
+      <span class="badge" data-i18n="badge_mimic">MIMIC external AUC 0.937</span>
+      <span class="badge" data-i18n="badge_ensemble">Screening threshold 0.312</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- Step 1: Demonstration, OCR upload, or manual entry -->
+<section class="card" id="upload-section">
+  <div class="step-badge" data-i18n="step1">Step 1</div>
+  <h2>Load a test ECG report</h2>
+  <p>Select one of the two test ECG reports to explore the complete screening workflow. The report image and 13 displayed values are loaded together for testing.</p>
+
+  <div class="demo-case-grid">
+    <article class="demo-case demo-case-normal">
+      <img src="./static/demo/rapidmi_test_normal.svg" alt="Normal-ECG test report">
+      <div>
+        <h3>Normal-ECG test report</h3>
+        <p>Test report with preloaded parameter values.</p>
+        <button type="button" class="btn-demo btn-demo-normal" id="btn-load-normal">Load test report</button>
+      </div>
+    </article>
+    <article class="demo-case demo-case-positive">
+      <img src="./static/demo/rapidmi_test_mi_related.svg" alt="MI-related screen-positive test report">
+      <div>
+        <h3>MI-related screen-positive test report</h3>
+        <p>Test report with preloaded parameter values.</p>
+        <button type="button" class="btn-demo btn-demo-positive" id="btn-load-mi">Load test report</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="upload-area" id="upload-area" role="button" tabindex="0" aria-label="Upload an ECG report image">
+    <div class="upload-icon">📄</div>
+    <p>Or upload a de-identified ECG report image for OCR</p>
+    <p class="hint">Supports JPG and PNG formats. Include the complete printed parameter block: field names, values and units. Use the original report rather than a preview with cropped labels.</p>
+    <input type="file" id="file-input" accept=".png,.jpg,.jpeg,.bmp,.tif,.tiff" hidden>
+  </div>
+
+  <div class="entry-divider">
+    <span data-i18n="upload_or">or</span>
+  </div>
+
+  <button class="btn-manual-entry" id="btn-manual-entry" data-i18n="manual_btn">
+    ✍️ Manual Entry — Enter report values
+  </button>
+
+  <div id="upload-status"></div>
+  <div class="preview-row" id="preview-row" style="display:none;">
+    <img id="image-preview" src="" alt="ECG Report Preview">
+    <div id="ocr-result-mini"></div>
+  </div>
+</section>
+
+<!-- Step 2: Parameters -->
+<section class="card" id="params-section" style="display:none;">
+  <div class="step-badge" data-i18n="step2">Step 2</div>
+  <h2 data-i18n="params_title">Verify & Edit Parameters</h2>
+  <p id="test-load-status" class="test-load-status" role="status" aria-live="polite" hidden></p>
+  <p>
+    <span>Review or edit the available report values. QTc and RV5+SV1 are calculated from their component inputs.</span>
+    <span class="legend-normal" data-i18n="legend_normal">● Normal</span>
+    <span class="legend-abnormal" data-i18n="legend_abnormal">● Abnormal</span>
+    <span class="legend-manual" data-i18n="legend_manual">● Manual</span>
+    <span class="warn" data-i18n="warn_abnormal">⚠ Abnormal values may affect prediction. Please verify carefully.</span>
+  </p>
+
+  <div class="params-grid">
+    <!-- Basic -->
+    <div class="param-group">
+      <h3 data-i18n="group_basic">Basic Information</h3>
+      <div class="param-row">
+        <label><span data-i18n="label_age">Age</span> <span class="unit" data-i18n="unit_years">years</span></label>
+        <input type="number" id="param-age" step="1" min="0" max="120" placeholder="—" data-feature="age">
+        <span class="range-hint" data-i18n="range_age">Normal: 18–120</span>
+        <span class="abnormal-badge" id="badge-age"></span>
+      </div>
+      <div class="param-row">
+        <label data-i18n="label_sex">Sex</label>
+        <select id="param-sex" data-feature="sex">
+          <option value="" data-i18n="sex_select">—</option>
+          <option value="1" data-i18n="sex_male">Male</option>
+          <option value="0" data-i18n="sex_female">Female</option>
+        </select>
+        <span class="abnormal-badge" id="badge-sex"></span>
+      </div>
+    </div>
+
+    <!-- Rate & Intervals -->
+    <div class="param-group">
+      <h3 data-i18n="group_rate">Heart Rate & Intervals</h3>
+      <div class="param-row">
+        <label><span data-i18n="label_hr">Heart Rate</span> <span class="unit" data-i18n="unit_bpm">bpm</span></label>
+        <input type="number" id="param-hr" step="1" min="30" max="250" placeholder="—" data-feature="hr">
+        <span class="range-hint" data-i18n="range_hr">Normal: 60–100</span>
+        <span class="abnormal-badge" id="badge-hr"></span>
+      </div>
+      <div class="param-row">
+        <label><span data-i18n="label_pr">PR Interval</span> <span class="unit" data-i18n="unit_ms">ms</span></label>
+        <input type="number" id="param-pr_interval" step="1" min="80" max="400" placeholder="—" data-feature="pr_interval">
+        <span class="range-hint" data-i18n="range_pr">Normal: 120–200</span>
+        <span class="abnormal-badge" id="badge-pr_interval"></span>
+      </div>
+      <div class="param-row">
+        <label><span data-i18n="label_qrs">QRS Duration</span> <span class="unit" data-i18n="unit_ms">ms</span></label>
+        <input type="number" id="param-qrs_duration" step="1" min="40" max="200" placeholder="—" data-feature="qrs_duration">
+        <span class="range-hint" data-i18n="range_qrs">Normal: 60–110</span>
+        <span class="abnormal-badge" id="badge-qrs_duration"></span>
+      </div>
+      <div class="param-row">
+        <label><span data-i18n="label_qt">QT Interval</span> <span class="unit" data-i18n="unit_ms">ms</span></label>
+        <input type="number" id="param-qt_interval" step="1" min="200" max="600" placeholder="—" data-feature="qt_interval">
+        <span class="range-hint" data-i18n="range_qt">Normal: 350–440</span>
+        <span class="abnormal-badge" id="badge-qt_interval"></span>
+      </div>
+      <div class="param-row">
+        <label><span data-i18n="label_qtc">QTc (Bazett)</span> <span class="unit" data-i18n="unit_ms">ms</span></label>
+        <input type="number" id="param-qtc" readonly aria-readonly="true" step="0.001" min="200" max="600" placeholder="—" data-feature="qtc">
+        <span class="range-hint" data-i18n="range_qtc">Calculated from QT and heart rate</span>
+        <span class="abnormal-badge" id="badge-qtc"></span>
+      </div>
+    </div>
+
+    <!-- Axis -->
+    <div class="param-group">
+      <h3 data-i18n="group_axis">Cardiac Axis (°)</h3>
+      <div class="param-row">
+        <label data-i18n="label_p_axis">P Axis</label>
+        <input type="number" id="param-p_axis" step="1" min="-180" max="180" placeholder="—" data-feature="p_axis">
+        <span class="range-hint" data-i18n="range_p_axis">Normal: 0–75</span>
+        <span class="abnormal-badge" id="badge-p_axis"></span>
+      </div>
+      <div class="param-row">
+        <label data-i18n="label_qrs_axis">QRS Axis</label>
+        <input type="number" id="param-qrs_axis" step="1" min="-180" max="180" placeholder="—" data-feature="qrs_axis">
+        <span class="range-hint" data-i18n="range_qrs_axis">Normal: −30–90</span>
+        <span class="abnormal-badge" id="badge-qrs_axis"></span>
+      </div>
+      <div class="param-row">
+        <label data-i18n="label_t_axis">T Axis ⭐</label>
+        <input type="number" id="param-t_axis" step="1" min="-180" max="180" placeholder="—" data-feature="t_axis">
+        <span class="range-hint" data-i18n="range_t_axis">Normal: 0–90</span>
+        <span class="abnormal-badge" id="badge-t_axis"></span>
+      </div>
+    </div>
+
+    <!-- Voltage -->
+    <div class="param-group">
+      <h3 data-i18n="group_voltage">Voltage (mV)</h3>
+      <div class="param-row">
+        <label data-i18n="label_rv5">RV5</label>
+        <input type="number" id="param-rv5" step="0.001" min="0.01" max="10" placeholder="—" data-feature="rv5">
+        <span class="range-hint" data-i18n="range_rv5">Normal: <2.5</span>
+        <span class="abnormal-badge" id="badge-rv5"></span>
+      </div>
+      <div class="param-row">
+        <label data-i18n="label_sv1">SV1</label>
+        <input type="number" id="param-sv1" step="0.001" min="0.01" max="10" placeholder="—" data-feature="sv1">
+        <span class="range-hint" data-i18n="range_sv1">Normal: <1.5</span>
+        <span class="abnormal-badge" id="badge-sv1"></span>
+      </div>
+      <div class="param-row">
+        <label><span data-i18n="label_cornell">RV5+SV1</span> <span class="unit" data-i18n="unit_cornell">Sokolow-Lyon sum; calculated from RV5 + SV1</span></label>
+        <input type="number" id="param-rv5_sv1_amp" step="0.001" min="0.02" max="20" placeholder="—" data-feature="rv5_sv1_amp" readonly aria-readonly="true">
+        <span class="range-hint" data-i18n="range_cornell">Normal: <3.5</span>
+        <span class="abnormal-badge" id="badge-rv5_sv1_amp"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abnormal summary -->
+  <div class="abnormal-summary" id="abnormal-summary" style="display:none;">
+    <h4 data-i18n="abnormal_title">⚠ Abnormal Parameter Summary</h4>
+    <div id="abnormal-summary-list"></div>
+  </div>
+
+  <p id="ocr-progress-status" class="ocr-progress-status" role="status" aria-live="polite" hidden></p>
+
+  <div id="ocr-review-notice" class="ocr-review-notice" hidden aria-live="polite">
+    <p id="ocr-review-message"></p>
+    <label><input type="checkbox" id="confirm-parameter-review">
+      <span id="ocr-review-label">I have checked the available values against the source report.</span>
+    </label>
+  </div>
+
+  <!-- Predict -->
+  <div class="predict-area">
+    <button class="btn-primary" id="btn-predict" disabled>
+      <span class="btn-text" data-i18n="btn_predict">Run emergency screening score</span>
+      <span class="btn-loading" style="display:none;">
+        <span class="spinner"></span> <span data-i18n="btn_predict_loading">AI Model Analyzing...</span>
+      </span>
+    </button>
+    <p class="hint" id="param-count" data-i18n="param_count">0 / 13 parameters filled</p>
+  </div>
+</section>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loading-overlay" style="display:none;">
+  <div class="loading-card">
+    <div class="loading-spinner-lg"></div>
+    <h3 data-i18n="loading_title">Analyzing ECG Parameters...</h3>
+    <p class="loading-detail" data-i18n="loading_detail">MLP Neural Network Inference</p>
+    <div class="loading-progress-bar">
+      <div class="loading-progress-fill" id="loading-progress-fill"></div>
+    </div>
+    <div class="loading-steps">
+      <div class="loading-step" id="load-step1"><span class="step-icon">○</span> <span data-i18n="loading_step1_text">Parameter Validation</span></div>
+      <div class="loading-step" id="load-step2"><span class="step-icon">○</span> <span data-i18n="loading_step2_text">Feature Scaling & Model Inference</span></div>
+      <div class="loading-step" id="load-step3"><span class="step-icon">○</span> <span data-i18n="loading_step3_text">Generating Risk Report</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3: Result -->
+<section class="card" id="result-section" style="display:none;">
+  <div class="step-badge" data-i18n="step3">Step 3</div>
+  <h2 data-i18n="result_title">Prediction Result</h2>
+  <div id="result-content"></div>
+  <div class="result-actions">
+    <button class="btn-secondary" id="btn-reset" data-i18n="btn_reset">🔄 New Prediction</button>
+  </div>
+</section>
+
+</main>
+
+<script src="./bridge.js?v=20261016-revision-v1-final"></script>
+<script src="./static/i18n.js?v=20261016-revision-v1-final"></script>
+<script src="./static/script.js?v=20261016-revision-v1-final"></script>
+</body>
+</html>

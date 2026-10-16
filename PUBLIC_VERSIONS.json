@@ -1,0 +1,58 @@
+{
+  "version": "rapidmi-revision-v1",
+  "updated": "2026-10-16",
+  "online_prototype": "https://rapidmi-app-ba3imnrsjpmcyxpsxesqyx.streamlit.app/",
+  "scope": "Non-sensitive frontend source and synthetic examples; private model, backend and patient data are not included.",
+  "model_artifact_sha256": "d20e62cd17e8c0c311acdde45fef11cf9cd3c47f4e00829116a9fee46eabba76",
+  "threshold": 0.312,
+  "cohorts": {
+    "PTB": {
+      "records": 7998,
+      "patients": 7383,
+      "auc": 0.9375931090545273
+    },
+    "MIMIC": {
+      "records": 1520,
+      "auc_display": 0.937
+    },
+    "Hospital": {
+      "records": 443,
+      "auc_display": 0.899
+    }
+  },
+  "input_derivation": {
+    "qtc": "QT * sqrt(HR / 60), before training-median imputation",
+    "rv5_sv1_amp": "RV5 + SV1 before imputation; missing if either is unavailable"
+  },
+  "legacy_root_version": "Historical V0 interface reference, cutoff 0.286. Its recorded example outputs are not V1 outputs.",
+  "files": [
+    {
+      "file": "revision_v1_interface/index.html",
+      "sha256": "01f4d836d071d0dbfe71ee5e2f1c7169acd7d2eaac77ed2299dd33e400a69bca"
+    },
+    {
+      "file": "revision_v1_interface/bridge.js",
+      "sha256": "6b433684240bae74dcb520670422fa971072e5417322fb310844874d6a168059"
+    },
+    {
+      "file": "revision_v1_interface/static/style.css",
+      "sha256": "05e7cbde1927e0f67f846fe028ccbb8d8ebad1770f97241531f5e96eae63a5e7"
+    },
+    {
+      "file": "revision_v1_interface/static/script.js",
+      "sha256": "992f2e505046cb17720d93c08cb7dd72b55a88bc69643d291f24301ed5106a81"
+    },
+    {
+      "file": "revision_v1_interface/static/i18n.js",
+      "sha256": "d26801b60aac1e710cd0d0301eaa4a2fbc6240ef856761d24537862f7c7d094a"
+    },
+    {
+      "file": "revision_v1_interface/static/demo/rapidmi_test_normal.svg",
+      "sha256": "586b5778c6e228d17b945e31ba6feaad3e809cf5f7309fa9d80fc9964fa37c01"
+    },
+    {
+      "file": "revision_v1_interface/static/demo/rapidmi_test_mi_related.svg",
+      "sha256": "f5b333b5e64cf63fa4b2754f7e5ca356188a62220f201cad3a8bae14cba39c7a"
+    }
+  ]
+}
