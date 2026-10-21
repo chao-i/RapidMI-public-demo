@@ -1,6 +1,6 @@
 {
   "version": "rapidmi-revision-v1",
-  "updated": "2026-10-16",
+  "updated": "2026-10-21",
   "online_prototype": "https://rapidmi-app-ba3imnrsjpmcyxpsxesqyx.streamlit.app/",
   "scope": "Non-sensitive frontend source and synthetic examples; private model, backend and patient data are not included.",
   "model_artifact_sha256": "d20e62cd17e8c0c311acdde45fef11cf9cd3c47f4e00829116a9fee46eabba76",
@@ -28,31 +28,37 @@
   "files": [
     {
       "file": "revision_v1_interface/index.html",
-      "sha256": "01f4d836d071d0dbfe71ee5e2f1c7169acd7d2eaac77ed2299dd33e400a69bca"
+      "sha256": "fec20552a89d9d9337bd18152ef8469598a3804473e48191b49ab4109c0e1dbf"
     },
     {
       "file": "revision_v1_interface/bridge.js",
-      "sha256": "6b433684240bae74dcb520670422fa971072e5417322fb310844874d6a168059"
+      "sha256": "734ea90cac15ce347d7f15147cd69830aa2aec8a3961b1bf7262317d1a0d9f1a"
     },
     {
       "file": "revision_v1_interface/static/style.css",
-      "sha256": "05e7cbde1927e0f67f846fe028ccbb8d8ebad1770f97241531f5e96eae63a5e7"
+      "sha256": "932192047ed468394e5a46fcc03b964586319ad4f4ed539f8c5618f6a4851e82"
     },
     {
       "file": "revision_v1_interface/static/script.js",
-      "sha256": "992f2e505046cb17720d93c08cb7dd72b55a88bc69643d291f24301ed5106a81"
+      "sha256": "0a77c4976945249e32f420335935403d03e2ecbc2fb3597758835f382fe3d29e"
     },
     {
       "file": "revision_v1_interface/static/i18n.js",
-      "sha256": "d26801b60aac1e710cd0d0301eaa4a2fbc6240ef856761d24537862f7c7d094a"
+      "sha256": "ec665fc4fc3885b65378d5eedbf687685baa5cc5426c731d239f938bc53bb932"
     },
     {
       "file": "revision_v1_interface/static/demo/rapidmi_test_normal.svg",
-      "sha256": "586b5778c6e228d17b945e31ba6feaad3e809cf5f7309fa9d80fc9964fa37c01"
+      "sha256": "9ee39a202062576e6d665fad67bb22c4deef38ba1bf35c462d0fdf1907b32479"
     },
     {
       "file": "revision_v1_interface/static/demo/rapidmi_test_mi_related.svg",
-      "sha256": "f5b333b5e64cf63fa4b2754f7e5ca356188a62220f201cad3a8bae14cba39c7a"
+      "sha256": "3263f22dddb2460500f917ec839cca470cca37b573c044c02c86aafcad69fc2b"
     }
-  ]
+  ],
+  "checksum_basis": "SHA-256 with CRLF normalized to LF for the listed UTF-8 interface files; matches their Git blob bytes in this release.",
+  "deployment_runtime_source": {
+    "repository": "https://github.com/chao-i/RapidMI-streamlit",
+    "commit": "b4dda68942d1b195aa698a500a69a775d52a1780",
+    "scope": "Private runtime baseline; no additional access rights are granted."
+  }
 }

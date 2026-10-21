@@ -8,7 +8,25 @@ https://rapidmi-app-ba3imnrsjpmcyxpsxesqyx.streamlit.app/
 
 No registration or report upload is needed to explore the two synthetic examples and model inference. Optional upload and manual entry require verification of the source report values. Community Cloud may hibernate when idle; if a sleep page appears, select “Yes, get this app back up!” and allow startup.
 
-The current non-sensitive frontend source and synthetic illustrations are in [revision_v1_interface](revision_v1_interface/). See [PUBLIC_VERSIONS.json](PUBLIC_VERSIONS.json) for the interface checksums, input derivations and deployed model-artifact checksum. The hospital records, private backend and trained V1 model are not distributed in this repository. This is an interface-source release, not a complete numerical reproduction of the study.
+The current non-sensitive frontend source and synthetic illustrations are in [revision_v1_interface](revision_v1_interface/). See [PUBLIC_VERSIONS.json](PUBLIC_VERSIONS.json) for the interface checksums, input derivations and deployed model-artifact checksum.
+The checksums use LF-normalized UTF-8 bytes so that Windows and Linux checkouts
+can be verified with the same values:
+
+    python scripts/verify_public_versions.py
+
+The hospital records, private backend and trained V1 model are not distributed in this repository. This is an interface-source release, not a complete numerical reproduction of the study.
+
+## Repository roles
+
+| Repository | Role |
+|---|---|
+| RapidMI-public-demo | Public V1 frontend, documentation and synthetic examples; historical root source remains V0. |
+| [RapidMI-streamlit](https://github.com/chao-i/RapidMI-streamlit) | Authenticated-access primary V1 deployment used by the public website. |
+| [RapidMI-streamlit-deploy](https://github.com/chao-i/RapidMI-streamlit-deploy) | Authenticated-access V1 backup on `codex/streamlit-deployment`. |
+
+The model remains version V1; this synchronization does not add experiments or
+change the study results. The deployment repositories require authorization;
+they are separate from the publicly accessible research website.
 
 ## Historical root interface
 
